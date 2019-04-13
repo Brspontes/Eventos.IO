@@ -1,0 +1,10 @@
+Z:\ESTUDO-DESENVOLVIMENTO\Curso-EduardoPires\APP\Eventos.IO\src\Eventos.IO.Domain\bin\Debug\netstandard2.0\Eventos.IO.Domain.deps.json
+Z:\ESTUDO-DESENVOLVIMENTO\Curso-EduardoPires\APP\Eventos.IO\src\Eventos.IO.Domain\bin\Debug\netstandard2.0\Eventos.IO.Domain.dll
+Z:\ESTUDO-DESENVOLVIMENTO\Curso-EduardoPires\APP\Eventos.IO\src\Eventos.IO.Domain\bin\Debug\netstandard2.0\Eventos.IO.Domain.pdb
+Z:\ESTUDO-DESENVOLVIMENTO\Curso-EduardoPires\APP\Eventos.IO\src\Eventos.IO.Domain\obj\Debug\netstandard2.0\Eventos.IO.Domain.csprojAssemblyReference.cache
+Z:\ESTUDO-DESENVOLVIMENTO\Curso-EduardoPires\APP\Eventos.IO\src\Eventos.IO.Domain\obj\Debug\netstandard2.0\Eventos.IO.Domain.csproj.CoreCompileInputs.cache
+Z:\ESTUDO-DESENVOLVIMENTO\Curso-EduardoPires\APP\Eventos.IO\src\Eventos.IO.Domain\obj\Debug\netstandard2.0\Eventos.IO.Domain.AssemblyInfoInputs.cache
+Z:\ESTUDO-DESENVOLVIMENTO\Curso-EduardoPires\APP\Eventos.IO\src\Eventos.IO.Domain\obj\Debug\netstandard2.0\Eventos.IO.Domain.AssemblyInfo.cs
+Z:\ESTUDO-DESENVOLVIMENTO\Curso-EduardoPires\APP\Eventos.IO\src\Eventos.IO.Domain\obj\Debug\netstandard2.0\Eventos.IO.Domain.dll
+Z:\ESTUDO-DESENVOLVIMENTO\Curso-EduardoPires\APP\Eventos.IO\src\Eventos.IO.Domain\obj\Debug\netstandard2.0\Eventos.IO.Domain.pdb
+Z:\ESTUDO-DESENVOLVIMENTO\Curso-EduardoPires\APP\Eventos.IO\src\Eventos.IO.Domain\bin\Debug\netstandard2.0\Eventos.IO.Domain.Core.dll
