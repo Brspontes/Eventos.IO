@@ -1,4 +1,4 @@
-﻿namespace Eventos.IO.Domain.MODELS
+﻿namespace Eventos.IO.Domain.EVENTOS
 {
     public class Endereco
     {
