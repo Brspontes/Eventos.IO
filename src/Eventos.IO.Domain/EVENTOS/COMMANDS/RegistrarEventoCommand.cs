@@ -12,7 +12,10 @@ namespace Eventos.IO.Domain.EVENTOS.COMMANDS
                                       bool gratuito,
                                       decimal valor,
                                       bool online,
-                                      string nomeEmpresa)
+                                      string nomeEmpresa,
+                                      Guid organizadorId,
+                                      Endereco endereco,
+                                      Categoria categoria)
         {
             Nome = nome;
             DataInicio = dataInicio;
@@ -21,6 +24,9 @@ namespace Eventos.IO.Domain.EVENTOS.COMMANDS
             Valor = valor;
             Online = online;
             NomeEmpresa = nomeEmpresa;
+            OrganizadorId = organizadorId;
+            Endereco = endereco;
+            Categoria = categoria;
         }
     }
 }

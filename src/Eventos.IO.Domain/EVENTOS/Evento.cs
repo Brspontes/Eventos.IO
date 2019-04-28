@@ -40,12 +40,36 @@ namespace Eventos.IO.Domain.EVENTOS
         public DateTime DataFim { get; private set; }
         public bool Gratuito { get; private set; }
         public decimal Valor { get; private set; }
+        public bool Excluido { get; private set; }
         public bool Online { get; private set; }
         public string NomeEmpresa { get; private set; }
-        public Categoria Categoria { get; private set; }
         public ICollection<Tags> Tags{ get; private set; }
-        public Endereco Endereco { get; private set; }
-        public Organizador Organizador { get; private set; }
+        public Guid? CategoriaId { get; private set; }
+        public Guid? EnderecoId { get; private set; }
+        public Guid OrganizadorId { get; private set; }
+
+        //EF propriedades de navegação
+        public virtual Categoria Categoria { get; private set; }
+        public virtual Endereco Endereco { get; private set; }
+        public virtual Organizador Organizador { get; private set; }
+
+        public void AtribuirEndereco(Endereco endereco)
+        {
+            if (!endereco.EhValido()) return;
+            Endereco = endereco;
+        }
+
+        public void AtribuirCategoria(Categoria categoria)
+        {
+            if (!categoria.EhValido()) return;
+            Categoria = categoria;
+        }
+
+        public void ExcluirEvento()
+        {
+            // TODO: Deve validar alguma regra?
+            Excluido = true;
+        }
 
         public override bool EhValido()
         {
@@ -62,6 +86,9 @@ namespace Eventos.IO.Domain.EVENTOS
             ValidarNomeEmpresa();
 
             ValidationResult = Validate(this);
+
+            //Validacoes Adicionais
+            ValidarEndereco();
         }
 
         private void ValidarNome()
@@ -115,9 +142,20 @@ namespace Eventos.IO.Domain.EVENTOS
                 .Length(2, 150).WithMessage("O nome do organizador precisa ter entre 2 e 150 caracteres");
         }
 
+        private void ValidarEndereco()
+        {
+            if (Online) return;
+            if (Endereco.EhValido()) return;
+
+            foreach (var error in Endereco.ValidationResult.Errors)
+            {
+                ValidationResult.Errors.Add(error);
+            }
+        }
+
         public static class EventoFactory
         {
-            public static Evento NovoEventoCompleto(Guid id, string nome, string descCurta, string descLonga, DateTime dataInicio, DateTime dataFim, bool gratuito, decimal valor, bool online, string nomeEmpresa, Guid? organizadorId)
+            public static Evento NovoEventoCompleto(Guid id, string nome, string descCurta, string descLonga, DateTime dataInicio, DateTime dataFim, bool gratuito, decimal valor, bool online, string nomeEmpresa, Guid? organizadorId, Endereco endereco, Guid categoriaId)
             {
                 var evento = new Evento()
                 {
@@ -130,11 +168,16 @@ namespace Eventos.IO.Domain.EVENTOS
                     Gratuito = gratuito,
                     Valor = valor,
                     Online = online,
-                    NomeEmpresa = nomeEmpresa
+                    NomeEmpresa = nomeEmpresa,
+                    Endereco = endereco,
+                    CategoriaId = categoriaId
                 };
 
                 if (organizadorId != null)
                     evento.Organizador = new Organizador(organizadorId.Value);
+
+                if (online)
+                    evento.Endereco = null;
 
                 return evento;
             }
