@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Eventos.IO.Site.Data;
 using Eventos.IO.Site.Models;
 using Eventos.IO.Site.Services;
+using Eventos.IO.Application.INTERFACES;
+using Eventos.IO.Application.SERVICES;
 
 namespace Eventos.IO.Site
 {
@@ -35,6 +37,8 @@ namespace Eventos.IO.Site
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+
+            services.AddScoped<IEventoAppService, EventoAppService>();
 
             services.AddMvc();
         }

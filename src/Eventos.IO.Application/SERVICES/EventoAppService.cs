@@ -31,6 +31,7 @@ namespace Eventos.IO.Application.SERVICES
 
         public void Atualizar(EventoViewModel eventoViewModel)
         {
+            // TODO: Validar se o organizador é dono do evento
             var atualizarEventoCommand = _mapper.Map<AtualizarEventoCommand>(eventoViewModel);
             _bus.SendCommand(atualizarEventoCommand);
         }
