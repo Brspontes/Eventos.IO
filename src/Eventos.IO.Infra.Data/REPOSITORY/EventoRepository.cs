@@ -1,4 +1,5 @@
-﻿using Eventos.IO.Domain.EVENTOS;
+﻿using Dapper;
+using Eventos.IO.Domain.EVENTOS;
 using Eventos.IO.Domain.EVENTOS.REPOSITORY;
 using Eventos.IO.Infra.Data.CONTEXT;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,14 @@ namespace Eventos.IO.Infra.Data.REPOSITORY
         {
 
         }
+        public override IEnumerable<Evento> ObterTodos()
+        {
+            var sql = "SELECT * FROM EVENTOS E " +
+                      "WHERE E. EXCLUIDO = 0 " +
+                      "ORDER BY E.DATAFIM DESC ";
+
+            return Db.Database.GetDbConnection().Query<Evento>(sql);
+        }
 
         public void AdicionarEndereco(Endereco endereco)
         {
@@ -28,17 +37,39 @@ namespace Eventos.IO.Infra.Data.REPOSITORY
 
         public Endereco ObterEnderecoPorId(Guid id)
         {
-            return Db.Enderecos.Find(id);
+            var sql = "SELECT * FROM ENDERECOS E " +
+                      "WHERE E.ID = @UID";
+
+            var endereco = Db.Database.GetDbConnection().Query<Endereco>(sql, new { UID = id });
+            return endereco.SingleOrDefault();
         }
 
         public IEnumerable<Evento> ObterEventoPorOrganizador(Guid organizadorId)
         {
-            return Db.Eventos.Where(e => e.OrganizadorId == organizadorId);
+            var sql = "SELECT * FROM EVENTOS E " +
+                      "WHERE E.EXCLUIDO = 0 " +
+                      "AND E.ORGANIZADORID = @OID " +
+                      "ORDER BY E.DATAFIM DESC";
+
+            return Db.Database.GetDbConnection().Query<Evento>(sql, new { @OID = organizadorId });
         }
 
         public override Evento ObterPorId(Guid id)
         {
-            return Db.Eventos.Include(e => e.Endereco).FirstOrDefault(e => e.Id == id);
+            var sql = "SELECT * FROM EVENTOS " +
+                      "LEFT JOIN ENDERECOS EN " +
+                      "ON E.ID = EN.EVENTOID " +
+                      "WHERE E.ID = @UID";
+
+            var evento = Db.Database.GetDbConnection().Query<Evento, Endereco, Evento>(sql,
+                (e, en) =>
+                {
+                    if (en != null)
+                        e.AtribuirEndereco(en);
+                    return e;
+                }, new { UID = id });
+
+            return evento.FirstOrDefault();
         }
     }
 }
