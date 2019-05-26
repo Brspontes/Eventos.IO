@@ -13,6 +13,11 @@ using Eventos.IO.Site.Models;
 using Eventos.IO.Site.Services;
 using Eventos.IO.Application.INTERFACES;
 using Eventos.IO.Application.SERVICES;
+using Microsoft.AspNetCore.Http;
+using Eventos.IO.Infra.CrossCuting.Bus;
+using Eventos.IO.Infra.CrossCuting.IoC;
+using AutoMapper;
+using Eventos.IO.Application.AUTOMAPPER;
 
 namespace Eventos.IO.Site
 {
@@ -38,13 +43,14 @@ namespace Eventos.IO.Site
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
-            services.AddScoped<IEventoAppService, EventoAppService>();
+            RegisterServices(services);
 
+            services.AddAutoMapper();
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IHttpContextAccessor accessor)
         {
             if (env.IsDevelopment())
             {
@@ -67,6 +73,13 @@ namespace Eventos.IO.Site
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            InMemoryBus.ContainerAccessor = () => accessor.HttpContext.RequestServices;
+        }
+
+        private static void RegisterServices(IServiceCollection services)
+        {
+            NativeInjectorBootStrapper.RegisterServices(services);
         }
     }
 }

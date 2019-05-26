@@ -1,5 +1,6 @@
 ﻿@model Eventos.IO.Application.VIEWMODELS.EventoViewModel
 
+
 @{
     ViewData["Title"] = "Create";
 }
@@ -17,26 +18,44 @@
                 <input asp-for="Nome" class="form-control" />
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="DescricaoCurta" class="control-label"></label>
                 <input asp-for="DescricaoCurta" class="form-control" />
                 <span asp-validation-for="DescricaoCurta" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="DescricaoLonga" class="control-label"></label>
-                <input asp-for="DescricaoLonga" class="form-control" />
+                <textarea rows="5" asp-for="DescricaoLonga" class="form-control" />
                 <span asp-validation-for="DescricaoLonga" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="Categoria" class="control-label"></label>
+                <input asp-for="Categoria" class="form-control" />
+                <span asp-validation-for="Categoria" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="DataInicio" class="control-label"></label>
                 <input asp-for="DataInicio" class="form-control" />
+                @{
+                     
+                    var categorias = (IEnumerable<SelectListItem>)new Eventos.IO.Application.VIEWMODELS.CategoriaViewModel().Categorias();
+                }
+                <select asp-for="CategoriaId" asp-items="@categorias" class="form-control">
+
+                </select>
                 <span asp-validation-for="DataInicio" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="DataFim" class="control-label"></label>
                 <input asp-for="DataFim" class="form-control" />
                 <span asp-validation-for="DataFim" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <div class="checkbox">
                     <label>
@@ -44,11 +63,13 @@
                     </label>
                 </div>
             </div>
+
             <div class="form-group">
                 <label asp-for="Valor" class="control-label"></label>
                 <input asp-for="Valor" class="form-control" />
                 <span asp-validation-for="Valor" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <div class="checkbox">
                     <label>
@@ -56,20 +77,13 @@
                     </label>
                 </div>
             </div>
+
             <div class="form-group">
                 <label asp-for="NomeEmpresa" class="control-label"></label>
                 <input asp-for="NomeEmpresa" class="form-control" />
                 <span asp-validation-for="NomeEmpresa" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CategoriaId" class="control-label"></label>
-                <select asp-for="CategoriaId" class ="form-control" asp-items="ViewBag.CategoriaId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="OrganizadorId" class="control-label"></label>
-                <input asp-for="OrganizadorId" class="form-control" />
-                <span asp-validation-for="OrganizadorId" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
