@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Eventos.IO.Application.VIEWMODELS;
 using Eventos.IO.Domain.EVENTOS;
+using Eventos.IO.Domain.ORGANIZADORES;
 
 namespace Eventos.IO.Application.AUTOMAPPER
 {
@@ -11,6 +12,7 @@ namespace Eventos.IO.Application.AUTOMAPPER
             CreateMap<Evento, EventoViewModel>();
             CreateMap<Endereco, EnderecoViewModel>();
             CreateMap<Categoria, CategoriaViewModel>();
+            CreateMap<Organizador, OrganizadorViewModel>();
         }
     }
 }

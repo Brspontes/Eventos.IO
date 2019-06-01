@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Eventos.IO.Application.VIEWMODELS;
 using Eventos.IO.Domain.EVENTOS.COMMANDS;
+using Eventos.IO.Domain.ORGANIZADORES.COMMANDS;
 using System;
 
 namespace Eventos.IO.Application.AUTOMAPPER
@@ -24,6 +25,10 @@ namespace Eventos.IO.Application.AUTOMAPPER
 
             CreateMap<EventoViewModel, ExcluirEventoCommand>()
                 .ConstructUsing(c => new ExcluirEventoCommand(c.Id));
+
+            //ORGANIZADOR
+            CreateMap<OrganizadorViewModel, RegistrarOrganizadorCommand>()
+                .ConstructUsing(c => new RegistrarOrganizadorCommand(c.Id, c.Nome, c.CPF, c.Email));
         }
     }
 

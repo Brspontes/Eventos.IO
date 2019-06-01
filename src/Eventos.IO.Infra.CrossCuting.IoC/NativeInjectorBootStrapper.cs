@@ -9,14 +9,14 @@ using Eventos.IO.Domain.EVENTOS.COMMANDS;
 using Eventos.IO.Domain.EVENTOS.EVENTS;
 using Eventos.IO.Domain.EVENTOS.REPOSITORY;
 using Eventos.IO.Domain.INTERFACES;
+using Eventos.IO.Domain.ORGANIZADORES.COMMANDS;
+using Eventos.IO.Domain.ORGANIZADORES.EVENTS;
+using Eventos.IO.Domain.ORGANIZADORES.REPOSITORY;
 using Eventos.IO.Infra.CrossCuting.Bus;
 using Eventos.IO.Infra.Data.CONTEXT;
 using Eventos.IO.Infra.Data.REPOSITORY;
 using Eventos.IO.Infra.Data.UOW;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Eventos.IO.Infra.CrossCuting.IoC
 {
@@ -28,17 +28,21 @@ namespace Eventos.IO.Infra.CrossCuting.IoC
             services.AddSingleton<IConfigurationProvider>(AutoMapperConfiguration.RegisterMappings());
             services.AddScoped<IMapper>(sp => new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService));
             services.AddScoped<IEventoAppService, EventoAppService>();
+            services.AddScoped<IOrganizadorAppService, OrganizadorAppService>();
             //DOMAIN Commands
             services.AddScoped<IHandler<RegistrarEventoCommand>, EventoCommandHandler>();
             services.AddScoped<IHandler<AtualizarEventoCommand>, EventoCommandHandler>();
             services.AddScoped<IHandler<ExcluirEventoCommand>, EventoCommandHandler>();
+            services.AddScoped<IHandler<RegistrarOrganizadorCommand>, OrganizadorCommandHandler>();
             //Domain - Eventos
             services.AddScoped<IDomainNotificationHandler<DomainNotification>, DomainNotificationHandler>();
             services.AddScoped<IHandler<EventoRegistradoEvent>, EventoEventHandler>();
             services.AddScoped<IHandler<EventoAtualizadoEvent>, EventoEventHandler>();
             services.AddScoped<IHandler<EventoExcluidoEvent>, EventoEventHandler>();
+            services.AddScoped<IHandler<OrganizadorRegistradoEvent>, OrganizadorEventHandler>();
             //Infra - Data
             services.AddScoped<IEventoRepository, EventoRepository>();
+            services.AddScoped<IOrganizadorRepository, OrganizadorRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSingleton<EventosContext>();
             //Infra Bus

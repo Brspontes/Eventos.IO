@@ -38,50 +38,51 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DescricaoCurta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DescricaoLonga)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataInicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataFim)
-            </td>
-            <td>
-                @{ 
-                    if(item.Gratuito)
-                    {
-                        @Html.DisplayName("Gratuito")
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DescricaoCurta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DescricaoLonga)
+                </td>
+                <td>
+                    @item.DataInicio.ToString("d")
+                </td>
+                <td>
+                    @item.DataFim.ToString("d")
+                </td>
+                <td>
+                    @{
+                        if (item.Gratuito)
+                        {
+                            @Html.DisplayName("Gratuito")
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelitem => item.Valor)
+                        }
                     }
-                    else
-                    {
-                        @Html.DisplayFor(modelitem => item.Valor)
-                    }
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Online)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </a> 
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-search"></span>
-                </a> 
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </a>
-            </td>
-        </tr>
-}
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Online)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

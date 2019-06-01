@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 <h2>Edit</h2>
 
 <h4>EventoViewModel</h4>
@@ -37,12 +37,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="DataInicio" class="control-label"></label>
-                <input asp-for="DataInicio" class="form-control" />
+                <input asp-for="DataInicio" type="text" asp-format="{0:dd/MM/yyyy}" class="form-control" />
                 <span asp-validation-for="DataInicio" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DataFim" class="control-label"></label>
-                <input asp-for="DataFim" class="form-control" />
+                <input asp-for="DataFim" type="text" asp-format="{0:dd/MM/yyyy}" class="form-control" />
                 <span asp-validation-for="DataFim" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -82,4 +82,39 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt-BR.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt.min.js" type="text/javascript"></script>
+    <script>
+        ValidacoesEvento();
+    </script>
+    @{
+        if (ViewBag.RetornoPost != null)
+        {
+
+            var notificacao = ViewBag.RetornoPost.ToString().Split(',');
+
+            <script>
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                Command: toastr["@notificacao[0]"]("@notificacao[1]");
+            </script>
+        }
+    }
 }
