@@ -10,6 +10,7 @@ using Eventos.IO.Site.Data;
 using Eventos.IO.Application.INTERFACES;
 using Eventos.IO.Domain.Core.NOTIFICATIONS;
 using Eventos.IO.Domain.INTERFACES;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Eventos.IO.Site.Controllers
 {
@@ -45,11 +46,13 @@ namespace Eventos.IO.Site.Controllers
             return View(eventoViewModel);
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(EventoViewModel eventoViewModel)
@@ -65,6 +68,7 @@ namespace Eventos.IO.Site.Controllers
             return View(eventoViewModel);
         }
 
+        [Authorize]
         public IActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -84,7 +88,7 @@ namespace Eventos.IO.Site.Controllers
             return View(eventoViewModel);
         }
 
-        
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(EventoViewModel eventoViewModel)
@@ -96,6 +100,7 @@ namespace Eventos.IO.Site.Controllers
             return View(eventoViewModel);
         }
 
+        [Authorize]
         public IActionResult Delete(Guid? id)
         {
             if (id == null)
