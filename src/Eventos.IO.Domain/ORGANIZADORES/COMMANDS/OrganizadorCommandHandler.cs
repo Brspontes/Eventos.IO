@@ -3,6 +3,7 @@ using Eventos.IO.Domain.Core.BUS;
 using Eventos.IO.Domain.Core.EVENTS;
 using Eventos.IO.Domain.Core.NOTIFICATIONS;
 using Eventos.IO.Domain.INTERFACES;
+using Eventos.IO.Domain.ORGANIZADORES.EVENTS;
 using Eventos.IO.Domain.ORGANIZADORES.REPOSITORY;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,7 @@ namespace Eventos.IO.Domain.ORGANIZADORES.COMMANDS
 
             if(Commit())
             {
-                //_bus.RaiseEvent();
+                _bus.RaiseEvent(new OrganizadorRegistradoEvent(organizador.Id, organizador.Nome, organizador.CPF, organizador.Email));
             }
         }
     }

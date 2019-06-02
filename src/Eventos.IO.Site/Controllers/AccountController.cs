@@ -15,6 +15,8 @@ using Eventos.IO.Site.Models.AccountViewModels;
 using Eventos.IO.Site.Services;
 using Eventos.IO.Domain.Core.NOTIFICATIONS;
 using Eventos.IO.Application.INTERFACES;
+using Eventos.IO.Application.VIEWMODELS;
+using Eventos.IO.Domain.INTERFACES;
 
 namespace Eventos.IO.Site.Controllers
 {
@@ -32,7 +34,8 @@ namespace Eventos.IO.Site.Controllers
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger, IDomainNotificationHandler<DomainNotification> notifications, IOrganizadorAppService organizadorAppService) : base(notifications)
+            ILogger<AccountController> logger, IDomainNotificationHandler<DomainNotification> notifications, IOrganizadorAppService organizadorAppService,
+            IUser user) : base(notifications, user)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -228,6 +231,22 @@ namespace Eventos.IO.Site.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    var organizador = new OrganizadorViewModel
+                    {
+                        Id = Guid.Parse(user.Id),
+                        Email = model.Email,
+                        Nome = model.Nome,
+                        CPF = model.CPF
+                    };
+
+                    _organizadorAppService.Registrar(organizador);
+
+                    if (!OperacaoValida())
+                    {
+                        await _userManager.DeleteAsync(user);
+                        return View(model);
+                    }
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

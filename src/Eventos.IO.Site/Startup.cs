@@ -18,6 +18,7 @@ using Eventos.IO.Infra.CrossCuting.Bus;
 using Eventos.IO.Infra.CrossCuting.IoC;
 using AutoMapper;
 using Eventos.IO.Application.AUTOMAPPER;
+using Eventos.IO.Domain.INTERFACES;
 
 namespace Eventos.IO.Site
 {
@@ -42,6 +43,7 @@ namespace Eventos.IO.Site
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IUser, AspNetUser>();
 
             RegisterServices(services);
 

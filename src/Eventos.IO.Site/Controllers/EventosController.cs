@@ -9,6 +9,7 @@ using Eventos.IO.Application.VIEWMODELS;
 using Eventos.IO.Site.Data;
 using Eventos.IO.Application.INTERFACES;
 using Eventos.IO.Domain.Core.NOTIFICATIONS;
+using Eventos.IO.Domain.INTERFACES;
 
 namespace Eventos.IO.Site.Controllers
 {
@@ -17,7 +18,8 @@ namespace Eventos.IO.Site.Controllers
         private readonly IEventoAppService _eventoAppService;
 
         public EventosController(IEventoAppService eventoAppService,
-                                 IDomainNotificationHandler<DomainNotification> notification) : base(notification)
+                                 IDomainNotificationHandler<DomainNotification> notification,
+                                 IUser user) : base(notification, user)
         {
             _eventoAppService = eventoAppService;
         }
@@ -54,6 +56,7 @@ namespace Eventos.IO.Site.Controllers
         {
             if (!ModelState.IsValid) return View(eventoViewModel);
 
+            eventoViewModel.OrganizadorId = OrganizadorId;
             _eventoAppService.Registrar(eventoViewModel);
 
             if (OperacaoValida()) ViewBag.RetornoPost = "sucess,Evento registrado com sucesso";

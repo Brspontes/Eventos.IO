@@ -8,9 +8,15 @@ namespace Eventos.IO.Site.Models.AccountViewModels
 {
     public class RegisterViewModel
     {
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+        [Required(ErrorMessage = "O nome é requerido")]
+        public string Nome { get; set; }
+
+        [Required(ErrorMessage = "CPF Requerido")]
+        [StringLength(11)]
+        public string CPF { get; set; }
+
+        [Required(ErrorMessage = "Email requerido")]
+        [EmailAddress(ErrorMessage = "Email em formato inválido")]
         public string Email { get; set; }
 
         [Required]
